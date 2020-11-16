@@ -12,8 +12,10 @@ import com.metalichecky.amonguseditor.model.item.Skin
 import com.metalichecky.amonguseditor.repo.GamePrefsRepo
 import com.metalichecky.amonguseditor.repo.ItemsRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class EditorViewModel : ViewModel() {
     private lateinit var gamePrefs: GamePrefs
@@ -26,19 +28,23 @@ class EditorViewModel : ViewModel() {
     val skins = MutableLiveData<List<Skin>>()
     val selectedSkin = MutableLiveData<Skin>()
 
+    private var updatingJob: Job? = null
+
     init {
         updatePrefs()
     }
 
     fun updatePrefs() {
-        viewModelScope.launch(Dispatchers.IO) {
+        if (updatingJob?.isActive == true) return
+        updatingJob = viewModelScope.launch(Dispatchers.IO) {
+            Timber.d("updatePrefs() started")
             progress.postValue(ProgressData(true, null, ProgressMessage.EDITOR_UPDATING_PREFS))
             gamePrefs = GamePrefsRepo.getGamePrefs() ?: GamePrefs()
             updateHats()
             updateSkins()
             updatePets()
             progress.postValue(ProgressData(false))
-
+            Timber.d("updatePrefs() finished")
         }
     }
 
