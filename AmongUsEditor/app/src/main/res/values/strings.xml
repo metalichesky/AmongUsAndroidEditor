@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Among Us Editor</string>
+
+    <string name="mainMenuOpenEditor">Open Editor</string>
+    <string name="mainMenuOpenGame">Open Game</string>
+    <string name="mainMenuAbout">About</string>
+
+    <string name="title_permissions_request">Allow some permissions</string>
+    <string name="message_permissions_request">To work with the character editor, you need to allow the application to access the file system of the device. Just click "Allow" and you will be able to work with the editor!</string>
+
+
+    <string name="title_permissions_dont_ask_again">Permissions not allowed</string>
+    <string name="message_permissions_dont_ask_again">It looks like you are not allowed to ask you for permission. Now, you should enable permissions through the app settings.</string>
+
+
+    <string name="title_permissions_denied">Permissions not allowed</string>
+    <string name="message_permissions_denied">Sorry, you haven\'t granted required permissions. Next time just click "Allow" and you can easy edit your character!</string>
+
+    <string name="editor_updating_game_prefs">Loading game settings…</string>
+
+    <string name="editor_hats_list_title">Hats</string>
+    <string name="editor_skins_list_title">Skins</string>
+    <string name="editor_pets_list_title">Pets</string>
+
+</resources>

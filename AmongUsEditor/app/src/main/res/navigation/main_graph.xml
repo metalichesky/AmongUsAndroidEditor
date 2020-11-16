@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/fragmentMain"
+    android:id="@+id/main_graph">
+
+    <fragment
+        android:name="com.metalichecky.amonguseditor.ui.fragment.MainFragment"
+        android:label="MainFragment"
+        android:id="@+id/fragmentMain">
+
+        <action
+            android:id="@+id/action_fragmentMain_to_fragmentEditor"
+            app:destination="@id/fragmentEditor" />
+    </fragment>
+
+    <fragment
+        android:name="com.metalichecky.amonguseditor.ui.fragment.EditorFragment"
+        android:label="EditorFragment"
+        android:id="@+id/fragmentEditor">
+
+    </fragment>
+
+</navigation>

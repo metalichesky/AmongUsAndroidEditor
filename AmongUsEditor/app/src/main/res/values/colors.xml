@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fff</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorPrimaryGray">#5D6468</color>
+    <color name="colorAccent">#F21717</color>
+
+
+    <color name="colorTextWhite">#fff</color>
+    <color name="colorTextBlack">#000</color>
+    <color name="colorTextGrayDark">#3F484D</color>
+    <color name="colorTextGrayLight">#8593B8</color>
+
+
+    <color name="colorItemBackground">#CCCCCC</color>
+    <color name="colorItemBackgroundSelected">#5D6468</color>
+<!--    <color name="colorRed">#F21717</color>-->
+<!--    <color name="colorRedDark">#880933</color>-->
+
+    <color name="colorSemiTransparent">#80000000</color>
+
+
+    <color name="colorRed">#B42A20</color>
+    <color name="colorRedDark">#6E1739</color>
+    <color name="colorBlue">#7DF9D7</color>
+    <color name="colorBlueDark">#52A4BA</color>
+    <color name="colorWhite">#D5DCEC</color>
+    <color name="colorWhiteDark">#8593B8</color>
+    <color name="colorPink">#DA5EB4</color>
+    <color name="colorPinkDark">#9C36A4</color>
+    <color name="colorOrange">#E18232</color>
+    <color name="colorOrangeDark">#A24621</color>
+    <color name="colorYellow">#E18232</color>
+    <color name="colorYellowDark">#B98B33</color>
+    <color name="colorLime">#82E95A</color>
+    <color name="colorLimeDark">#4CA44E</color>
+    <color name="colorGreen">#3A7D3A</color>
+    <color name="colorGreenDark">#214C31</color>
+    <color name="colorBlack">#3F484D</color>
+    <color name="colorBlackDark">#1E1F24</color>
+    <color name="colorBrown">#6B4B25</color>
+    <color name="colorBrownDark">#57291A</color>
+    <color name="colorCyan">#192EC7</color>
+    <color name="colorCyanDark">#0B1489</color>
+    <color name="colorPurple">#6332B2</color>
+    <color name="colorPurpleDark">#371876</color>
+</resources>
