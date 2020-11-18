@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1071063023344",
+    "firebase_url": "https://amonguseditor-b5285.firebaseio.com",
+    "project_id": "amonguseditor-b5285",
+    "storage_bucket": "amonguseditor-b5285.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071063023344:android:34ded0e958313190620c35",
+        "android_client_info": {
+          "package_name": "com.metalichecky.amonguseditor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071063023344-8qj1f25c2e5303vl42e1378io5dg9s6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metalichecky.amonguseditor",
+            "certificate_hash": "1c1cdfc9dcbda1c9d5106f5d39a99c6b6bbdb542"
+          }
+        },
+        {
+          "client_id": "1071063023344-05iu6r76r9ekp1cte787gt81o4qua4kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7mX-yesmMb1hb7wBCXWnO7YVyat7Msb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071063023344-05iu6r76r9ekp1cte787gt81o4qua4kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

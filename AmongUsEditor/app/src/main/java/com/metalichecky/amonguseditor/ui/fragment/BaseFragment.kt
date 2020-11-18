@@ -11,7 +11,6 @@ abstract class BaseFragment: Fragment() {
         MessageDialog(title, message, listener).apply {
             this.show(fragmentManager)
         }
-
     }
 
 }

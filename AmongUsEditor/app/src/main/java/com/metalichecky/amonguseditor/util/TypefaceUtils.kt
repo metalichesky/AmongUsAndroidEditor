@@ -20,6 +20,9 @@ class TypefaceUtils {
         SKINNY("fonts/the_skinny.otf"),
         SKINNY_BOLD("fonts/the_skinny_bold.otf"),
         IN_YOUR_FACE("fonts/in_your_face.ttf"),
+        OSWALD_BOLD("fonts/oswald_bold.ttf"),
+        OSWALD_REGULAR("fonts/oswald_regular.ttf"),
+        OSWALD_MEDIUM("fonts/oswald_medium.ttf"),
         DEFAULT("")
     }
 

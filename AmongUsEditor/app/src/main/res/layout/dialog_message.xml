@@ -35,7 +35,9 @@
                 android:layout_marginHorizontal="6dp"
                 android:gravity="start"
                 android:textColor="@color/colorTextGrayLight"
-                android:textSize="24sp" />
+                android:textSize="18sp"
+                android:autoLink="web"
+                android:linksClickable="true" />
 
 
             <Button

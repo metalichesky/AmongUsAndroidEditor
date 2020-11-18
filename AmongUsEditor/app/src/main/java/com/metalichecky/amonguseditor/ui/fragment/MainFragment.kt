@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.ui.MessageDialog
 import com.metalichecky.amonguseditor.util.*
@@ -48,6 +51,15 @@ class MainFragment : BaseFragment() {
 
         btnOpenGame.setOnClickListener {
             DeeplinkUtils.openAmongUsGame()
+        }
+
+        btnOpenAbout.setOnClickListener {
+            try {
+                throw RuntimeException("Test Crash")
+            } catch (ex: Exception) {
+                Firebase.crashlytics.log("Test Crash caught!")
+                Firebase.crashlytics.recordException(ex)
+            }
         }
     }
 

@@ -47,7 +47,7 @@ class MessageDialog(
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         btnOk.setCustomTypeface(TypefaceUtils.TypeFaces.SKINNY_BOLD)
         tvTitle.setCustomTypeface(TypefaceUtils.TypeFaces.SKINNY_BOLD)
-        tvMessage.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
+        tvMessage.setCustomTypeface(TypefaceUtils.TypeFaces.OSWALD_REGULAR)
 
         title?.let {
             tvTitle?.setText(it)
