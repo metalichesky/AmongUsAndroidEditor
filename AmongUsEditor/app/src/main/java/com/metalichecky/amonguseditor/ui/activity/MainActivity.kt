@@ -1,22 +1,21 @@
 package com.metalichecky.amonguseditor.ui.activity
 
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.ui.MessageDialog
+import com.metalichecky.amonguseditor.util.LocaleUtils
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     companion object {
         const val EXTRA_MESSAGE_TITLE = "EXTRA_MESSAGE_TITLE"
         const val EXTRA_MESSAGE_TEXT = "EXTRA_MESSAGE_TEXT"
         const val EXTRA_SHOW_MESSAGE = "EXTRA_SHOW_MESSAGE"
-
-
     }
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +36,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showMessage(title: String?, message: String?, listener: MessageDialog.Listener? = null) {
-        val fragmentManager = supportFragmentManager ?: return
-        MessageDialog(title, message, listener).apply {
-            this.show(fragmentManager)
-        }
-    }
 }

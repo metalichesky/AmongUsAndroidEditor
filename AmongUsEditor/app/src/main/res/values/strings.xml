@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Among Us Editor</string>
+    <string name="app_name" translatable="false">Among Us Editor</string>
 
     <string name="mainMenuOpenEditor">Open Editor</string>
     <string name="mainMenuOpenGame">Open Game</string>
@@ -22,5 +22,10 @@
     <string name="editor_skins_list_title">Skins</string>
     <string name="editor_pets_list_title">Pets</string>
     <string name="app_version">Version: %s</string>
+
+    <string name="about_info">This application was written for educational purposes and is not intended to be of any benefit. There will never be ads in the app. The application will receive regular updates, and its functionality will be filled with new features. All questions and suggestions can be addressed to the official publics on social networks: \n https://www.facebook.com/groups/amonguseditor \nhttps://vk.com/among_us_editor</string>
+
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_russian" translatable="false">Русский</string>
 
 </resources>

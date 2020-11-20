@@ -121,6 +121,7 @@ class World() {
     }
 
     var size: PointF = DEFAULT_SIZE
+    var backgroundColor: Int = Color.parseColor("#202020")
     var lastUpdateTimeMs: Long = -1
     var random = Random(System.currentTimeMillis())
 
@@ -136,33 +137,37 @@ class World() {
 
         val starsCount = random.nextInt(STARS_MIN, STARS_MAX)
         val stars = Array<StarObject>(starsCount) {
-            StarObject().apply {
-//                direction = PointF(random.nextSignedFloat(), 0f)
-            }
+            StarObject().apply { }
         }
         val hatsCount = random.nextInt(HATS_MIN, HATS_MAX)
         val hats = Array<HatObject>(hatsCount) {
-            HatObject().apply {
-//                direction = PointF(random.nextSignedFloat(), random.nextSignedFloat())
-            }
+            HatObject().apply { }
         }
         val petsCount = random.nextInt(PETS_MIN, PETS_MAX)
         val pets = Array<PetObject>(petsCount) {
-            PetObject().apply {
-//                direction = PointF(random.nextSignedFloat(), random.nextSignedFloat())
-            }
+            PetObject().apply {}
         }
         objects.addAll(stars)
         objects.addAll(hats)
         objects.addAll(pets)
 
+        objects.forEach {
+            generateObject(it)
+        }
+        this.objects = objects
+    }
+
+    private fun generateObject(it: GameObject) {
         val center = PointF(size.x / 2f, size.y / 2f)
         val centerRadius = 300f
-        objects.forEach {
-            it.generate()
-            it.position.x = random.nextFloat() * size.x
-            it.position.y = random.nextFloat() * size.y
-            it.rotation = random.nextFloat(0f, 360f)
+        it.generate()
+        it.position.x = random.nextFloat() * size.x
+        it.position.y = random.nextFloat() * size.y
+        it.rotation = random.nextFloat(0f, 360f)
+        if (it is StarObject) {
+            it.direction.x = 1.0f
+            it.direction.y = 0.0f
+        } else {
             val randomCenter = PointF(
                 center.x + random.nextSignedFloat() * centerRadius,
                 center.y + random.nextSignedFloat() * centerRadius,
@@ -171,7 +176,6 @@ class World() {
             it.direction.y = randomCenter.y - it.position.y
             it.direction.normalize()
         }
-        this.objects = objects
     }
 
     fun update() {
@@ -187,7 +191,7 @@ class World() {
     }
 
     fun draw(canvas: Canvas, offset: PointF) {
-        canvas.drawColor(Color.BLACK)
+        canvas.drawColor(backgroundColor)
         objects.forEach { gameObject ->
             gameObject.texture?.let { texture ->
                 val positionX = gameObject.position.x - offset.x
@@ -212,9 +216,8 @@ class World() {
 abstract class GameObject() {
     companion object {
         //speed is change per ms
+        val random = Random(System.currentTimeMillis())
     }
-
-    val random = Random(System.currentTimeMillis())
 
     var texture: Bitmap? = null
     var position = PointF()
@@ -247,11 +250,9 @@ class StarObject() : GameObject() {
     override var minRotationSpeed: Float = 0f
     override var maxRotationSpeed: Float = 0f
     override var minSpeed: Float = 0f
-    override var maxSpeed: Float = 0.005f
+    override var maxSpeed: Float = 0.008f
 
-    init {
-
-    }
+    init { }
 
     override fun generate() {
         super.generate()
@@ -275,7 +276,8 @@ class HatObject() : GameObject() {
     override var minSpeed: Float = 0.005f
     override var maxSpeed: Float = 0.05f
 
-    init { }
+    init {
+    }
 
     override fun generate() {
         super.generate()
@@ -293,6 +295,7 @@ class HatObject() : GameObject() {
 
 class PetObject() : GameObject() {
     companion object {}
+
     override var minRotationSpeed: Float = 0.00f
     override var maxRotationSpeed: Float = 0.05f
     override var minSpeed: Float = 0.005f

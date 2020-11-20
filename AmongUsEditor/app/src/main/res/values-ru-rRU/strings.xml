@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Among Us Editor</string>
+
+    <string name="mainMenuOpenEditor">Открыть редактор</string>
+    <string name="mainMenuOpenGame">Открыть игру</string>
+    <string name="mainMenuAbout">О приложении</string>
+
+    <string name="title_permissions_request">Предоставьте приложению разрешение</string>
+    <string name="message_permissions_request">Чтобы работать с редактором персонажа, вам нужно предоставить приложению доступ к файловой системе устройства. Просто нажмите "Разрешить" и тогда вы сможете работать с редактором персонажа!</string>
+
+
+    <string name="title_permissions_dont_ask_again">Разрешения не предоставлены</string>
+    <string name="message_permissions_dont_ask_again">Похоже вы запретили запрашивать у вас разрешения. Теперь, вы сможете предоставить приложению разрешения только на экране настроек приложения.</string>
+
+
+    <string name="title_permissions_denied">Разрешения не предоставлены</string>
+    <string name="message_permissions_denied">К сожалению, вы не предоставили все необходимые разрешения. В следующий раз просто нажмите "Разрешить" и тогда вы сможете настроить своего игрового персонажа!</string>
+
+    <string name="editor_updating_game_prefs">Загрузка настроек игры…</string>
+
+    <string name="editor_hats_list_title">Шляпы</string>
+    <string name="editor_skins_list_title">Скины</string>
+    <string name="editor_pets_list_title">Питомцы</string>
+    <string name="app_version">Версия: %s</string>
+
+    <string name="about_info">Это приложение было написано в образовательных целях и не несёт цели получить какую-либо выгоду. В приложении никогда не будет рекламы. Приложение будет регулярно получать обновления, а его функционал будет наполняться новыми возможностями. Все вопросы и предложения можно адресовать в официальные паблики в соцсетях: \n https://www.facebook.com/groups/amonguseditor \nhttps://vk.com/among_us_editor</string>
+
+
+
+</resources>

@@ -100,7 +100,7 @@ class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
 
-            tvHatName.setCustomTypeface(TypefaceUtils.TypeFaces.SKINNY_BOLD)
+            tvHatName.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
             tvHatName.setText(hat.name)
             AssetRepo.getAssetDrawable(hat)?.let {
                 ivHatImage.setImageDrawable(it)
@@ -126,7 +126,7 @@ class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
 
-            tvSkinName.setCustomTypeface(TypefaceUtils.TypeFaces.SKINNY_BOLD)
+            tvSkinName.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
             tvSkinName.setText(skin.name)
             AssetRepo.getAssetDrawable(skin)?.let {
                 ivSkinImage.setImageDrawable(it)
@@ -152,7 +152,7 @@ class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
 
-            tvPetName.setCustomTypeface(TypefaceUtils.TypeFaces.SKINNY_BOLD)
+            tvPetName.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
             tvPetName.setText(pet.name)
             AssetRepo.getAssetDrawable(pet)?.let {
                 ivPetImage.setImageDrawable(it)

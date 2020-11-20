@@ -67,9 +67,9 @@ class EditorFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvHatsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
-        tvSkinsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
-        tvPetsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
+        tvHatsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC)
+        tvSkinsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC)
+        tvPetsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC)
 
         setupHatsList()
         setupSkinsList()
@@ -158,7 +158,7 @@ class EditorFragment : BaseFragment() {
                 } else {
                     ""
                 }
-                tvProgressText?.setCustomTypeface(TypefaceUtils.TypeFaces.SKINNY_BOLD)
+                tvProgressText?.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
                 tvProgressText?.setText("${getString(it)} $percentageStr")
             }
         } else {

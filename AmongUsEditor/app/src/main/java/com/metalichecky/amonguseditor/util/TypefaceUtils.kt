@@ -23,6 +23,8 @@ class TypefaceUtils {
         OSWALD_BOLD("fonts/oswald_bold.ttf"),
         OSWALD_REGULAR("fonts/oswald_regular.ttf"),
         OSWALD_MEDIUM("fonts/oswald_medium.ttf"),
+        AMATIC("fonts/amatic_sc_regular.ttf"),
+        AMATIC_BOLD("fonts/amatic_sc_bold.ttf"),
         DEFAULT("")
     }
 
