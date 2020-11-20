@@ -51,8 +51,9 @@ object GameFileUtils {
 //        Timber.d("searchAmongUsPrefsFile() getExternalSDCardDir ${FileUtils.getExternalSDCardDir()}")
 //        Timber.d("searchAmongUsPrefsFile() getExternalSDCardDir ${FileUtils.getExternalSDCardDir()?.list()?.joinToString { it }}")
 
-        var appDir: File? = null//FileUtils.getAppExternalDataDir(Constants.AMONG_US_PACKAGE_NAME)
-        if (appDir == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        var appDir: File? = FileUtils.getAppExternalDataDir(Constants.AMONG_US_PACKAGE_NAME)
+        val defaultPathExists = appDir != null && appDir.exists()
+        if (!defaultPathExists && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val pathToSearch = getAmongUsPrefsSearchPath()
             val externalRoot = FileUtils.getExternalDir()
             var finded: File? = FileUtils.searchInDir(externalRoot?.toPath(), pathToSearch)?.toFile()

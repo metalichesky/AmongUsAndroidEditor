@@ -21,5 +21,6 @@
     <string name="editor_hats_list_title">Hats</string>
     <string name="editor_skins_list_title">Skins</string>
     <string name="editor_pets_list_title">Pets</string>
+    <string name="app_version">Version: %s</string>
 
 </resources>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
+import com.metalichecky.amonguseditor.BuildConfig
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.ui.MessageDialog
 import com.metalichecky.amonguseditor.util.*
@@ -44,6 +45,8 @@ class MainFragment : BaseFragment() {
         btnOpenEditor.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
         btnOpenGame.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
         btnOpenAbout.setCustomTypeface(TypefaceUtils.TypeFaces.IN_YOUR_FACE)
+        tvAppVersion.setCustomTypeface(TypefaceUtils.TypeFaces.OSWALD_REGULAR)
+        tvAppVersion.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME))
 
         btnOpenEditor.setOnClickListener {
             openEditor()

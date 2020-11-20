@@ -1,10 +1,15 @@
 package com.metalichecky.amonguseditor.repo
 
 import com.metalichecky.amonguseditor.model.item.Hat
+import com.metalichecky.amonguseditor.model.item.Item
 import com.metalichecky.amonguseditor.model.item.Pet
 import com.metalichecky.amonguseditor.model.item.Skin
+import kotlin.math.absoluteValue
+import kotlin.random.Random
+import kotlin.reflect.KClass
 
 object ItemsRepo {
+    private val random = Random(System.currentTimeMillis())
 
     fun getHats(): List<Hat> {
         return hats
@@ -18,6 +23,56 @@ object ItemsRepo {
         return pets
     }
 
+    private var hatsRandom: MutableList<Hat> = mutableListOf()
+    private var petsRandom: MutableList<Pet> = mutableListOf()
+    private var skinsRandom: MutableList<Skin> = mutableListOf()
+
+    fun <T: Any> getRandomNonRepeatable(clazz: KClass<T>): Item? {
+        println("getRandomItem() ${clazz} ${Hat::class} ${clazz == Hat::class}")
+        if (hatsRandom.isEmpty()) {
+            hatsRandom = getHats().toMutableList()
+        }
+        if (petsRandom.isEmpty()) {
+            petsRandom = getPets().toMutableList()
+        }
+        if (skinsRandom.isEmpty()) {
+            skinsRandom = getSkins().toMutableList()
+        }
+        return when(clazz) {
+            Hat::class -> {
+                val hat = hatsRandom.random(random)
+                hatsRandom.remove(hat)
+                hat
+            }
+            Skin::class -> {
+                val skin = skinsRandom.random(random)
+                skinsRandom.remove(skin)
+                skin
+            }
+            Pet::class -> {
+                val pet = petsRandom.random(random)
+                petsRandom.remove(pet)
+                pet
+            }
+            else -> null
+        }
+    }
+
+    fun <T: Any> getRandomItem(clazz: KClass<T>): Item? {
+        println("getRandomItem() ${clazz} ${Hat::class} ${clazz == Hat::class}")
+        return when(clazz) {
+            Hat::class -> {
+                getHats().random(random)
+            }
+            Skin::class -> {
+                getSkins().random(random)
+            }
+            Pet::class -> {
+                getPets().random(random)
+            }
+            else -> null
+        }
+    }
 }
 
 val hats = listOf(
