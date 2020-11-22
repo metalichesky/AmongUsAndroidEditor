@@ -17,6 +17,7 @@ import com.metalichecky.amonguseditor.ui.MessageDialog
 import com.metalichecky.amonguseditor.util.*
 import com.tbruyelle.rxpermissions3.Permission
 import com.tbruyelle.rxpermissions3.RxPermissions
+import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
@@ -34,80 +35,24 @@ class AboutFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupButtons()
+        setupViews()
     }
 
 
-    private fun setupButtons() {
-//        tvAbout.setCustomTypeface(TypefaceUtils.TypeFaces.OSWALD_REGULAR)
-//
-//        btnCancel.setOnClickListener {
-//            openEditor()
-//        }
+    private fun setupViews() {
+        tvAbout.setCustomTypeface(TypefaceUtils.TypeFaces.OSWALD_REGULAR)
+        btnBack.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
+        tvAbout.setText(R.string.about_info)
+
+        btnBack.setOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
     override fun onStart() {
         super.onStart()
     }
 
-    private fun openEditor() {
-        if (isNeedRequestPermissions()) {
-            showMessage(
-                getString(R.string.title_permissions_request),
-                getString(R.string.message_permissions_request),
-                object : MessageDialog.Listener {
-                    override fun onClosed() {
-                        requestNeededPermissions()
-                    }
-                }
-            )
-        } else {
-            findNavController().navigate(R.id.action_fragmentMain_to_fragmentEditor)
-        }
-    }
 
-    private fun getNeededPermissions(): List<String> {
-        val permissions = RxPermissions(this)
-        val nonGrantedPermissions = Constants.neededPermissions.filter {
-            !permissions.isGranted(it)
-        }
-        return nonGrantedPermissions
-    }
 
-    private fun isNeedRequestPermissions(): Boolean {
-        return getNeededPermissions().isNotEmpty()
-    }
-
-    private fun requestNeededPermissions() {
-        val permissions = RxPermissions(this)
-        val nonGrantedPermissions = getNeededPermissions()
-
-        if (nonGrantedPermissions.isNotEmpty()) {
-            permissions.requestEachCombined(*(nonGrantedPermissions.toTypedArray()))
-                .subscribe { permission ->
-                    if (permission.granted) {
-                        findNavController().navigate(R.id.action_fragmentMain_to_fragmentEditor)
-                    } else if (!permission.shouldShowRequestPermissionRationale) {
-                        openPermissionSettings()
-                    } else {
-                        showMessage(
-                            getString(R.string.title_permissions_denied),
-                            getString(R.string.message_permissions_denied)
-                        )
-                    }
-                }
-        }
-    }
-
-    private fun openPermissionSettings() {
-        showMessage(
-            getString(R.string.title_permissions_dont_ask_again),
-            getString(R.string.message_permissions_dont_ask_again),
-            object : MessageDialog.Listener {
-                override fun onClosed() {
-                    DeeplinkUtils.openAppPermissionSettings()
-                }
-            }
-        )
-    }
 }

@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_fragmentMain_to_fragmentEditor"
             app:destination="@id/fragmentEditor" />
+        <action
+            android:id="@+id/action_fragmentMain_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
 
     <fragment
@@ -21,4 +24,10 @@
 
     </fragment>
 
+    <fragment
+        android:name="com.metalichecky.amonguseditor.ui.fragment.AboutFragment"
+        android:label="AboutFragment"
+        android:id="@+id/aboutFragment">
+
+    </fragment>
 </navigation>

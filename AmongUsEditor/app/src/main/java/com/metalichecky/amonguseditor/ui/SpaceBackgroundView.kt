@@ -185,9 +185,19 @@ class World() {
         }
         val deltaTimeMs = currentTimeMs - lastUpdateTimeMs
         objects.forEach {
+            bounceObject(it)
             it.update(deltaTimeMs)
         }
         lastUpdateTimeMs = currentTimeMs
+    }
+
+    fun bounceObject(gameObject: GameObject) {
+        if (gameObject.position.x !in 0f..size.x) {
+            gameObject.direction.x = -gameObject.direction.x
+        }
+        if (gameObject.position.y !in 0f..size.y) {
+            gameObject.direction.y = -gameObject.direction.y
+        }
     }
 
     fun draw(canvas: Canvas, offset: PointF) {

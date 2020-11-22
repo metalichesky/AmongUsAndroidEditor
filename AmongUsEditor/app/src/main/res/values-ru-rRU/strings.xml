@@ -2,9 +2,10 @@
 <resources>
     <string name="app_name">Among Us Editor</string>
 
-    <string name="mainMenuOpenEditor">Открыть редактор</string>
-    <string name="mainMenuOpenGame">Открыть игру</string>
-    <string name="mainMenuAbout">О приложении</string>
+    <string name="main_menu_open_editor">Открыть редактор</string>
+    <string name="main_menu_open_game">Открыть игру</string>
+    <string name="main_menu_about">О приложении</string>
+    <string name="about_menu_back">Назад</string>
 
     <string name="title_permissions_request">Предоставьте приложению разрешение</string>
     <string name="message_permissions_request">Чтобы работать с редактором персонажа, вам нужно предоставить приложению доступ к файловой системе устройства. Просто нажмите "Разрешить" и тогда вы сможете работать с редактором персонажа!</string>
@@ -24,7 +25,7 @@
     <string name="editor_pets_list_title">Питомцы</string>
     <string name="app_version">Версия: %s</string>
 
-    <string name="about_info">Это приложение было написано в образовательных целях и не несёт цели получить какую-либо выгоду. В приложении никогда не будет рекламы. Приложение будет регулярно получать обновления, а его функционал будет наполняться новыми возможностями. Все вопросы и предложения можно адресовать в официальные паблики в соцсетях: \n https://www.facebook.com/groups/amonguseditor \nhttps://vk.com/among_us_editor</string>
+    <string name="about_info">Это приложение было создано в образовательных целях и не несёт цели получить какую-либо выгоду. В приложении никогда не будет рекламы. Приложение будет регулярно получать обновления, а его функционал будет наполняться новыми возможностями. Все вопросы и предложения можно адресовать в официальные паблики в соцсетях: \n https://www.facebook.com/groups/amonguseditor \nhttps://vk.com/among_us_editor</string>
 
 
 

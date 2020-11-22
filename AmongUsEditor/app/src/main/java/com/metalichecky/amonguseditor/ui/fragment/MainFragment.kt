@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -16,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.metalichecky.amonguseditor.BuildConfig
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.adapter.LanguageAdapter
+import com.metalichecky.amonguseditor.di.Injectable
 import com.metalichecky.amonguseditor.ui.MessageDialog
 import com.metalichecky.amonguseditor.util.*
 import com.metalichecky.amonguseditor.vm.SettingsViewModel
@@ -26,9 +28,13 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
 
-class MainFragment : BaseFragment() {
-    val settingsViewModel: SettingsViewModel by activityViewModels()
+class MainFragment : BaseFragment(), Injectable {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +46,10 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val activity = activity ?: return
+        val vmp = ViewModelProvider(activity, viewModelFactory)
+        settingsViewModel = vmp.get(SettingsViewModel::class.java)
+
         setupButtons()
     }
 
@@ -61,28 +71,30 @@ class MainFragment : BaseFragment() {
         }
 
         btnOpenAbout.setOnClickListener {
-            try {
-                throw RuntimeException("Test Crash")
-            } catch (ex: Exception) {
-                Firebase.crashlytics.log("Test Crash caught!")
-                Firebase.crashlytics.recordException(ex)
-            }
+            openAbout()
         }
 
-        spLanguage.adapter = LanguageAdapter(settingsViewModel.getLanguages())
-        spLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val language = settingsViewModel.getLanguages().get(position)
+        val languages = settingsViewModel.languages
+        val position = languages.indexOfFirst {
+            it.ordinal == SettingsViewModel.currentLanguage.ordinal
+        }
+        val languageAdapter = LanguageAdapter(languages)
+        spLanguage.adapter = languageAdapter
+        spLanguage.setSelection(position)
+        spLanguage.onItemSelectedListener = object : OnSelectionChanged() {
+            override fun onSelectionChanged(idx: Int) {
+                val language = languageAdapter.languages.get(idx)
                 settingsViewModel.setLanguage(language)
             }
-
         }
     }
 
     override fun onStart() {
         super.onStart()
+    }
+
+    private fun openAbout() {
+        findNavController().navigate(R.id.action_fragmentMain_to_aboutFragment)
     }
 
     private fun openEditor() {
@@ -145,4 +157,22 @@ class MainFragment : BaseFragment() {
             }
         )
     }
+
+}
+
+abstract class OnSelectionChanged : AdapterView.OnItemSelectedListener {
+    var currentSelectionIdx: Int = -1
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Timber.d("onItemSelected() ${position}")
+        if (currentSelectionIdx < 0) {
+            currentSelectionIdx = position
+        } else if (currentSelectionIdx != position) {
+            currentSelectionIdx = position
+            onSelectionChanged(position)
+        }
+    }
+
+    abstract fun onSelectionChanged(idx: Int)
 }

@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.flexbox.*
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.adapter.ItemsAdapter
+import com.metalichecky.amonguseditor.di.Injectable
 import com.metalichecky.amonguseditor.model.ProgressData
 import com.metalichecky.amonguseditor.model.item.Hat
 import com.metalichecky.amonguseditor.model.item.Item
@@ -25,9 +28,13 @@ import com.tbruyelle.rxpermissions3.RxPermissions
 import kotlinx.android.synthetic.main.fragment_editor.*
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
 
-class EditorFragment : BaseFragment() {
-    val editorViewModel: EditorViewModel by activityViewModels()
+class EditorFragment : BaseFragment(), Injectable {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var editorViewModel: EditorViewModel
 
     private lateinit var hatsAdapter: ItemsAdapter
     private lateinit var hatsLayoutManager: FlexboxLayoutManager
@@ -67,6 +74,10 @@ class EditorFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val activity = activity ?: return
+        val vmp = ViewModelProvider(activity, viewModelFactory)
+        editorViewModel = vmp.get(EditorViewModel::class.java)
+
         tvHatsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC)
         tvSkinsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC)
         tvPetsTitle.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC)

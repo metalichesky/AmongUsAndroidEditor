@@ -6,22 +6,36 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.metalichecky.amonguseditor.model.settings.Language
 import com.metalichecky.amonguseditor.ui.MessageDialog
-import com.metalichecky.amonguseditor.util.LocaleUtils
+import com.metalichecky.amonguseditor.util.DataStore
+import com.metalichecky.amonguseditor.util.LanguageUtils
 import com.metalichecky.amonguseditor.vm.SettingsViewModel
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
-    val settingsViewModel: SettingsViewModel by viewModels()
+
+    lateinit var settingsViewModel: SettingsViewModel
+
+    abstract fun getViewModelFactory(): ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        settingsViewModel.needSwitchLanguage.observe(this, Observer {
-            if (it == true) {
-                setLanguage(settingsViewModel.getCurrentLanguage())
-                settingsViewModel.needSwitchLanguage.postValue(null)
+        val vmp = ViewModelProvider(this, getViewModelFactory())
+        settingsViewModel = vmp.get(SettingsViewModel::class.java)
+        settingsViewModel.settingsUpdated.observe(this, Observer {
+            if (it != null) {
+                updateSettings()
+                settingsViewModel.settingsUpdated.postValue(null)
             }
         })
     }
@@ -35,24 +49,31 @@ abstract class BaseActivity : AppCompatActivity() {
 
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(LocaleUtils.onAttachBaseContext(newBase))
+        val language = SettingsViewModel.currentLanguage
+        val updatedContext = LanguageUtils.onAttachBaseContext(newBase, language)
+        super.attachBaseContext(updatedContext)
     }
 
     override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
-            LocaleUtils.onApplyOverrideConfiguration(this, overrideConfiguration)
+            val language = SettingsViewModel.currentLanguage
+            LanguageUtils.onApplyOverrideConfiguration(
+                this@BaseActivity,
+                overrideConfiguration,
+                language
+            )
         }
         super.applyOverrideConfiguration(overrideConfiguration)
     }
 
-    fun setLanguage(language: Language) {
-        LocaleUtils.setLanguage(this, language.name)
-        recreate()
+    private fun updateSettings() {
+        Timber.d("updateSettings()")
+        setLanguage(SettingsViewModel.currentLanguage)
     }
 
-    fun setLanguage(language: String) {
-        Timber.d("setLanguage() ${language}")
-        LocaleUtils.setLanguage(this, language)
+    private fun setLanguage(language: Language) {
+        Timber.d("setLanguage() ${language.locale.language}")
+        LanguageUtils.setLanguage(this@BaseActivity, language)
         recreate()
     }
 }

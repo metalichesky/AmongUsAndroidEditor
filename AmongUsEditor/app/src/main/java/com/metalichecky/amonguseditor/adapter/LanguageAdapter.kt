@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.model.settings.Language
+import com.metalichecky.amonguseditor.util.TypefaceUtils
+import com.metalichecky.amonguseditor.util.setCustomTypeface
 import kotlinx.android.synthetic.main.layout_item_language.view.*
 
 class LanguageAdapter(
@@ -18,6 +20,7 @@ class LanguageAdapter(
             val view = inflater.inflate(R.layout.layout_item_language, parent, false)
             val language = languages.get(idx)
             view.tvLanguage.setText(language.nameResId)
+            view.tvLanguage.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
             view.ivLanguage.setImageResource(language.imageResId)
             view
         } else {

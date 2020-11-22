@@ -1,16 +1,25 @@
 package com.metalichecky.amonguseditor.ui.activity
 
-import android.content.Context
-import android.content.res.Configuration
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.metalichecky.amonguseditor.R
-import com.metalichecky.amonguseditor.ui.MessageDialog
-import com.metalichecky.amonguseditor.util.LocaleUtils
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
+import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var injectedViewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
+
+    override fun getViewModelFactory() = injectedViewModelFactory
+
     companion object {
         const val EXTRA_MESSAGE_TITLE = "EXTRA_MESSAGE_TITLE"
         const val EXTRA_MESSAGE_TEXT = "EXTRA_MESSAGE_TEXT"
@@ -24,7 +33,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun fetchMessage() {
-        val showMessage = intent.extras?.getBoolean(EXTRA_SHOW_MESSAGE, false) ?: false
+        val showMessage = intent.extras?.getString(EXTRA_SHOW_MESSAGE)?.toBoolean() ?: false
         Timber.d("fetchMessage() show = ${showMessage}")
         if (showMessage) {
             val messageText = intent.extras?.getString(EXTRA_MESSAGE_TEXT)
@@ -35,5 +44,4 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
 }

@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Among Us Editor</string>
 
-    <string name="mainMenuOpenEditor">Open Editor</string>
-    <string name="mainMenuOpenGame">Open Game</string>
-    <string name="mainMenuAbout">About</string>
+    <string name="main_menu_open_editor">Open Editor</string>
+    <string name="main_menu_open_game">Open Game</string>
+    <string name="main_menu_about">About</string>
+    <string name="about_menu_back">Back</string>
 
     <string name="title_permissions_request">Allow some permissions</string>
     <string name="message_permissions_request">To work with the character editor, you need to allow the application to access the file system of the device. Just click "Allow" and you will be able to work with the editor!</string>
@@ -23,9 +24,10 @@
     <string name="editor_pets_list_title">Pets</string>
     <string name="app_version">Version: %s</string>
 
-    <string name="about_info">This application was written for educational purposes and is not intended to be of any benefit. There will never be ads in the app. The application will receive regular updates, and its functionality will be filled with new features. All questions and suggestions can be addressed to the official publics on social networks: \n https://www.facebook.com/groups/amonguseditor \nhttps://vk.com/among_us_editor</string>
+    <string name="about_info">This application was created for educational purposes and is not intended to be of any benefit. There will never be ads in the app. The application will receive regular updates, and its functionality will be filled with new features. All questions and suggestions can be addressed to the official publics on social networks: \n https://www.facebook.com/groups/amonguseditor \nhttps://vk.com/among_us_editor</string>
 
     <string name="language_english" translatable="false">English</string>
     <string name="language_russian" translatable="false">Русский</string>
+
 
 </resources>
