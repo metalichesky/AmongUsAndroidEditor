@@ -17,6 +17,13 @@
     <string name="title_permissions_denied">Permissions not allowed</string>
     <string name="message_permissions_denied">Sorry, you haven\'t granted required permissions. Next time just click "Allow" and you can easy edit your character!</string>
 
+    <string name="title_error_game_prefs_not_found">Oops!</string>
+    <string name="text_error_game_prefs_not_found">Looks like file with game settings not exists! Editor won\'t work without that file…</string>
+
+    <string name="title_error_game_not_found">Oops!</string>
+    <string name="text_error_game_not_found">Looks like Among Us game not installed</string>
+
+
     <string name="editor_updating_game_prefs">Loading game settings…</string>
 
     <string name="editor_hats_list_title">Hats</string>

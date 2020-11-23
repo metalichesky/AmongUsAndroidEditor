@@ -2,9 +2,8 @@ package com.metalichecky.amonguseditor.vm
 
 import androidx.lifecycle.*
 import com.metalichecky.amonguseditor.model.settings.Language
-import com.metalichecky.amonguseditor.util.DataStore
+import com.metalichecky.amonguseditor.repo.DataStore
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(): ViewModel() {
@@ -17,26 +16,29 @@ class SettingsViewModel @Inject constructor(): ViewModel() {
     val settingsUpdated = MutableLiveData<Boolean>()
 
     init {
-        settings.settingsFlow.asLiveData().observeForever{
-            updateSettings()
+        settings.languageFlow.asLiveData().observeForever{
+            updateSettings(false)
         }
     }
 
     fun setLanguage(newLanguage: Language) {
         viewModelScope.launch {
             settings.setLanguage(newLanguage)
+            updateSettings(true)
         }
     }
 
-    fun updateSettings(onUpdated: (() -> Unit)? = null) {
-        Timber.d("updateSettings()")
+    fun updateSettings(notifyOnUpdated: Boolean = true, onUpdated: (() -> Unit)? = null) {
         viewModelScope.launch {
             // update all settings here
             currentLanguage = settings.getLanguage()
 
-            // send message that all settings has been updated
             onUpdated?.invoke()
-            settingsUpdated.postValue(true)
+
+            if (notifyOnUpdated) {
+                // send message that all settings has been updated
+                settingsUpdated.postValue(true)
+            }
         }
     }
 }

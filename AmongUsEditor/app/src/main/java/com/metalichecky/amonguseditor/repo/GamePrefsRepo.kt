@@ -8,7 +8,11 @@ import java.util.*
 
 object GamePrefsRepo {
 
-    fun getGamePrefs(): GamePrefs? {
+    suspend fun isGamePrefsExists(): Boolean {
+        return GameFileUtils.getAmongUsPrefsFile()?.exists() ?: false
+    }
+
+    suspend fun getGamePrefs(): GamePrefs? {
         val prefsFile = GameFileUtils.getAmongUsPrefsFile() ?: return null
         val reader = Scanner(prefsFile)
         var prefsString = ""
@@ -19,7 +23,7 @@ object GamePrefsRepo {
         return GamePrefs.fromString(prefsString)
     }
 
-    fun saveGamePrefs(gamePrefs: GamePrefs) {
+    suspend fun saveGamePrefs(gamePrefs: GamePrefs) {
         val prefsFile = GameFileUtils.getAmongUsPrefsFile() ?: return
         val fileWriter = FileWriter(prefsFile)
         val prefsString = gamePrefs.toString()

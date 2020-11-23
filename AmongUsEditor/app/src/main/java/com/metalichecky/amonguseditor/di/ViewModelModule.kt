@@ -3,6 +3,7 @@ package com.metalichecky.amonguseditor.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.metalichecky.amonguseditor.vm.EditorViewModel
+import com.metalichecky.amonguseditor.vm.FirebaseMessageViewModel
 import com.metalichecky.amonguseditor.vm.SettingsViewModel
 import dagger.Binds
 import dagger.Module
@@ -22,6 +23,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EditorViewModel::class)
     abstract fun bindEditorViewModel(editorViewModel: EditorViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FirebaseMessageViewModel::class)
+    abstract fun bindFirebaseMessageViewModel(firebaseMessageViewModel: FirebaseMessageViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

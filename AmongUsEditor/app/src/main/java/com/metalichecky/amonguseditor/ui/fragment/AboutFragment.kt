@@ -13,6 +13,7 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.metalichecky.amonguseditor.BuildConfig
 import com.metalichecky.amonguseditor.R
+import com.metalichecky.amonguseditor.model.Screen
 import com.metalichecky.amonguseditor.ui.MessageDialog
 import com.metalichecky.amonguseditor.util.*
 import com.tbruyelle.rxpermissions3.Permission
@@ -23,7 +24,7 @@ import timber.log.Timber
 import java.io.File
 
 class AboutFragment : BaseFragment() {
-
+    override val screen: Screen? = Screen("About")
 
     override fun onCreateView(
         inflater: LayoutInflater,

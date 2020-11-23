@@ -1,42 +1,64 @@
 package com.metalichecky.amonguseditor.util
 
-import android.content.Context
 import android.os.Build
-import android.os.Environment
-import android.os.storage.StorageManager
-import android.util.Log
-import androidx.annotation.RequiresApi
-import com.metalichecky.amonguseditor.App
-import com.metalichecky.amonguseditor.BuildConfig
-import timber.log.Timber
+import com.metalichecky.amonguseditor.repo.DataStore
 import java.io.File
-import java.lang.Exception
-import java.nio.file.Files
-import java.nio.file.Path
 
 object GameFileUtils {
+    const val GAME_FILE_APP_DIR = "game_dir"
+    const val GAME_FILE_FILES_DIR = "game_files_dir"
+    const val GAME_FILE_PREFS_FILE = "game_player_prefs_file"
+
     const val AMONG_US_FILES_DIR_NAME = "files"
     const val AMONG_US_PREFS_FILENAME = "playerPrefs"
 
-    private var amongUsCachedAppDir: File? = null
-
-    fun getAmongUsAppDir(): File? {
-        if (amongUsCachedAppDir == null) {
-            amongUsCachedAppDir = searchAmongUsAppDir()
+    suspend fun getAmongUsAppDir(): File? {
+        val settings = DataStore.Settings()
+        // restore game dir from storage
+        val amongUsCachedAppDirPath = settings.getGameAppDir()
+        var amongUsCachedAppDir = if (amongUsCachedAppDirPath != null) {
+            File(amongUsCachedAppDirPath)
+        } else {
+            null
         }
+        if (amongUsCachedAppDir == null || !amongUsCachedAppDir.exists()) {
+            // search game dir if we have not already founded
+            amongUsCachedAppDir = searchAmongUsAppDir()
+            if (amongUsCachedAppDir != null && amongUsCachedAppDir.exists()) {
+                // if we found game dir, save it
+                settings.setGameAppDir(amongUsCachedAppDir.absolutePath)
+            }
+        }
+        FirebaseLogger.logFile(
+            amongUsCachedAppDir?.path ?: "",
+            GAME_FILE_APP_DIR,
+            amongUsCachedAppDir?.exists() ?: false
+        )
         return amongUsCachedAppDir
     }
 
-    fun getAmongUsFilesDir(): File? {
-        return File(getAmongUsAppDir(), AMONG_US_FILES_DIR_NAME)
+    suspend fun getAmongUsFilesDir(): File? {
+        val amongUsAppDir = getAmongUsAppDir()
+        val amongUsFilesDir = if (amongUsAppDir != null) {
+            File(amongUsAppDir, AMONG_US_FILES_DIR_NAME)
+        } else {
+            null
+        }
+        return amongUsFilesDir
     }
 
-    fun isAmongUsAppExists(): Boolean {
+    suspend fun getAmongUsPrefsFile(): File? {
+        val amongUsFilesDir = getAmongUsFilesDir()
+        val amongUsPrefsFile = if (amongUsFilesDir != null) {
+            File(amongUsFilesDir, AMONG_US_PREFS_FILENAME)
+        } else {
+            null
+        }
+        return amongUsPrefsFile
+    }
+
+    suspend fun isAmongUsAppExists(): Boolean {
         return getAmongUsAppDir()?.exists() ?: false
-    }
-
-    fun getAmongUsPrefsFile(): File? {
-        return File(getAmongUsFilesDir(), AMONG_US_PREFS_FILENAME)
     }
 
     private fun getAmongUsPrefsSearchPath(): String {
@@ -46,17 +68,15 @@ object GameFileUtils {
     }
 
     private fun searchAmongUsAppDir(): File? {
-//        Timber.d("searchAmongUsPrefsFile() getExternalDir ${FileUtils.getExternalDir()}")
-//        Timber.d("searchAmongUsPrefsFile() getExternalDir ${FileUtils.getExternalDir()?.list()?.joinToString { it }}")
-//        Timber.d("searchAmongUsPrefsFile() getExternalSDCardDir ${FileUtils.getExternalSDCardDir()}")
-//        Timber.d("searchAmongUsPrefsFile() getExternalSDCardDir ${FileUtils.getExternalSDCardDir()?.list()?.joinToString { it }}")
-
         var appDir: File? = FileUtils.getAppExternalDataDir(Constants.AMONG_US_PACKAGE_NAME)
+        // get default app path
         val defaultPathExists = appDir != null && appDir.exists()
         if (!defaultPathExists && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // if default app path not exists, we should scan for it on device
             val pathToSearch = getAmongUsPrefsSearchPath()
             val externalRoot = FileUtils.getExternalDir()
-            var finded: File? = FileUtils.searchInDir(externalRoot?.toPath(), pathToSearch)?.toFile()
+            var finded: File? =
+                FileUtils.searchInDir(externalRoot?.toPath(), pathToSearch)?.toFile()
             if (finded == null) {
                 val sdCardRoot = FileUtils.getExternalSDCardDir()
                 finded = FileUtils.searchInDir(sdCardRoot?.toPath(), pathToSearch)?.toFile()
@@ -65,6 +85,4 @@ object GameFileUtils {
         }
         return appDir
     }
-
-
 }

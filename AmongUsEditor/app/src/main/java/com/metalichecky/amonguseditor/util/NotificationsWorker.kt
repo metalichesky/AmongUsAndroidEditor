@@ -25,7 +25,6 @@ class NotificationsWorker(var context: Context, var workerParams: WorkerParamete
         const val TEXT = "TEXT"
         const val IMAGE_URL = "IMAGE_URL"
         const val LAUNCH_APP = "LAUNCH_APP"
-        const val SHOW_IN_APP = "LAUNCH_APP"
     }
 
     override suspend fun doWork(): Result {
@@ -39,14 +38,10 @@ class NotificationsWorker(var context: Context, var workerParams: WorkerParamete
         val text = workerParams.inputData.getString(TEXT)
         val imageUrl = workerParams.inputData.getString(IMAGE_URL)
         val launchApp = workerParams.inputData.getString(LAUNCH_APP)?.toBoolean() ?: true
-        val showInApp = workerParams.inputData.getString(SHOW_IN_APP)?.toBoolean() ?: true
 
         val intent = if (launchApp) {
             Intent(applicationContext, MainActivity::class.java).apply{
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                putExtra(MainActivity.EXTRA_MESSAGE_TITLE, title)
-                putExtra(MainActivity.EXTRA_MESSAGE_TEXT, text)
-                putExtra(MainActivity.EXTRA_SHOW_MESSAGE, showInApp)
             }
         } else {
             null

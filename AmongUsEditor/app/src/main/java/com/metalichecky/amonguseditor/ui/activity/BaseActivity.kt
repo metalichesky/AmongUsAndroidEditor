@@ -4,23 +4,14 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import com.metalichecky.amonguseditor.model.settings.Language
 import com.metalichecky.amonguseditor.ui.MessageDialog
-import com.metalichecky.amonguseditor.util.DataStore
 import com.metalichecky.amonguseditor.util.LanguageUtils
 import com.metalichecky.amonguseditor.vm.SettingsViewModel
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -67,13 +58,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun updateSettings() {
-        Timber.d("updateSettings()")
-        setLanguage(SettingsViewModel.currentLanguage)
-    }
-
-    private fun setLanguage(language: Language) {
-        Timber.d("setLanguage() ${language.locale.language}")
-        LanguageUtils.setLanguage(this@BaseActivity, language)
+        LanguageUtils.setLanguage(this@BaseActivity, SettingsViewModel.currentLanguage)
         recreate()
     }
 }

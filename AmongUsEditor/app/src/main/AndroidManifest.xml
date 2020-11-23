@@ -6,6 +6,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <queries>
+        <!-- Explicit apps you know in advance about: -->
+        <package android:name="com.metalichesky.amonguseditor"/>
+        <package android:name="com.innersloth.spacemafia"/>
+    </queries>
+
     <application
         android:name=".App"
         android:allowBackup="true"

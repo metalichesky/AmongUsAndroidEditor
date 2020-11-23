@@ -3,6 +3,7 @@ package com.metalichecky.amonguseditor.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.metalichecky.amonguseditor.model.EditorError
 import com.metalichecky.amonguseditor.model.ProgressData
 import com.metalichecky.amonguseditor.model.ProgressMessage
 import com.metalichecky.amonguseditor.model.gameprefs.GamePrefs
@@ -11,16 +12,17 @@ import com.metalichecky.amonguseditor.model.item.Pet
 import com.metalichecky.amonguseditor.model.item.Skin
 import com.metalichecky.amonguseditor.repo.GamePrefsRepo
 import com.metalichecky.amonguseditor.repo.ItemsRepo
+import com.metalichecky.amonguseditor.util.FirebaseLogger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
 class EditorViewModel @Inject constructor(): ViewModel() {
     private lateinit var gamePrefs: GamePrefs
 
+    var error = MutableLiveData<EditorError>()
     var progress = MutableLiveData<ProgressData>()
     val hats = MutableLiveData<List<Hat>>()
     val selectedHat = MutableLiveData<Hat>()
@@ -40,7 +42,11 @@ class EditorViewModel @Inject constructor(): ViewModel() {
         updatingJob = viewModelScope.launch(Dispatchers.IO) {
             Timber.d("updatePrefs() started")
             progress.postValue(ProgressData(true, null, ProgressMessage.EDITOR_UPDATING_PREFS))
-            gamePrefs = GamePrefsRepo.getGamePrefs() ?: GamePrefs()
+            val newGamePrefs = GamePrefsRepo.getGamePrefs()
+            if (newGamePrefs == null) {
+                error.postValue(EditorError.GAME_PREFS_FILE_NOT_EXISTS)
+            }
+            gamePrefs = newGamePrefs ?: GamePrefs()
             updateHats()
             updateSkins()
             updatePets()
@@ -50,7 +56,16 @@ class EditorViewModel @Inject constructor(): ViewModel() {
     }
 
     fun savePrefs() {
-        GamePrefsRepo.saveGamePrefs(gamePrefs)
+        viewModelScope.launch(Dispatchers.IO) {
+            GamePrefsRepo.saveGamePrefs(gamePrefs)
+        }
+    }
+
+    fun checkPrefsExists(onResult: (Boolean)->Unit) {
+        viewModelScope.launch {
+            val result = GamePrefsRepo.isGamePrefsExists()
+            onResult.invoke(result)
+        }
     }
 
     fun updateHats() {
@@ -66,6 +81,7 @@ class EditorViewModel @Inject constructor(): ViewModel() {
     }
 
     fun selectHat(hat: Hat) {
+        FirebaseLogger.logSelectItem(hat)
         gamePrefs.lastHat = hat.id
         updateHats()
         savePrefs()
@@ -85,6 +101,7 @@ class EditorViewModel @Inject constructor(): ViewModel() {
     }
 
     fun selectSkin(skin: Skin) {
+        FirebaseLogger.logSelectItem(skin)
         gamePrefs.lastSkin = skin.id
         updateSkins()
         savePrefs()
@@ -103,6 +120,7 @@ class EditorViewModel @Inject constructor(): ViewModel() {
     }
 
     fun selectPet(pet: Pet) {
+        FirebaseLogger.logSelectItem(pet)
         gamePrefs.lastPet = pet.id
         updatePets()
         savePrefs()

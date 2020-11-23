@@ -1,40 +1,37 @@
 package com.metalichecky.amonguseditor.ui.fragment
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.metalichecky.amonguseditor.BuildConfig
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.adapter.LanguageAdapter
 import com.metalichecky.amonguseditor.di.Injectable
+import com.metalichecky.amonguseditor.model.NavigateType
+import com.metalichecky.amonguseditor.model.Screen
 import com.metalichecky.amonguseditor.ui.MessageDialog
 import com.metalichecky.amonguseditor.util.*
+import com.metalichecky.amonguseditor.vm.FirebaseMessageViewModel
 import com.metalichecky.amonguseditor.vm.SettingsViewModel
-import com.tbruyelle.rxpermissions3.Permission
 import com.tbruyelle.rxpermissions3.RxPermissions
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 
 class MainFragment : BaseFragment(), Injectable {
+    override val screen: Screen? = Screen("Main")
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var settingsViewModel: SettingsViewModel
+    lateinit var firebaseMessageViewModel: FirebaseMessageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,12 +46,23 @@ class MainFragment : BaseFragment(), Injectable {
         val activity = activity ?: return
         val vmp = ViewModelProvider(activity, viewModelFactory)
         settingsViewModel = vmp.get(SettingsViewModel::class.java)
+        firebaseMessageViewModel = vmp.get(FirebaseMessageViewModel::class.java)
 
-        setupButtons()
+        firebaseMessageViewModel.needShowMessage.observe(viewLifecycleOwner, Observer {
+            it?.let { message ->
+                showMessage(message.title, message.text, object : MessageDialog.Listener {
+                    override fun onClosed() {
+                        firebaseMessageViewModel.setMessageShown(message)
+                    }
+                })
+            }
+        })
+
+        setupViews()
     }
 
 
-    private fun setupButtons() {
+    private fun setupViews() {
         tvAppName.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
         btnOpenEditor.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
         btnOpenGame.setCustomTypeface(TypefaceUtils.TypeFaces.AMATIC_BOLD)
@@ -67,7 +75,7 @@ class MainFragment : BaseFragment(), Injectable {
         }
 
         btnOpenGame.setOnClickListener {
-            DeeplinkUtils.openAmongUsGame()
+            openGame()
         }
 
         btnOpenAbout.setOnClickListener {
@@ -89,12 +97,19 @@ class MainFragment : BaseFragment(), Injectable {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     private fun openAbout() {
         findNavController().navigate(R.id.action_fragmentMain_to_aboutFragment)
+    }
+
+    private fun openGame() {
+        FirebaseLogger.logNavigate(Screen("AmongUsGame"), NavigateType.OPEN)
+        if (!DeeplinkUtils.amongUsGameExists()) {
+            showMessage(
+                getString(R.string.title_error_game_not_found),
+                getString(R.string.text_error_game_not_found)
+            )
+        }
+        DeeplinkUtils.openAmongUsGame()
     }
 
     private fun openEditor() {

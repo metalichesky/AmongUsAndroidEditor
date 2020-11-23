@@ -13,7 +13,9 @@ import com.google.android.flexbox.*
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.adapter.ItemsAdapter
 import com.metalichecky.amonguseditor.di.Injectable
+import com.metalichecky.amonguseditor.model.EditorError
 import com.metalichecky.amonguseditor.model.ProgressData
+import com.metalichecky.amonguseditor.model.Screen
 import com.metalichecky.amonguseditor.model.item.Hat
 import com.metalichecky.amonguseditor.model.item.Item
 import com.metalichecky.amonguseditor.model.item.Pet
@@ -31,6 +33,8 @@ import java.io.File
 import javax.inject.Inject
 
 class EditorFragment : BaseFragment(), Injectable {
+    override val screen: Screen? = Screen("CharacterEditor")
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -112,6 +116,12 @@ class EditorFragment : BaseFragment(), Injectable {
         editorViewModel.progress.observe(viewLifecycleOwner, Observer {
             it?.let{ showProgress(it) }
         })
+        editorViewModel.error.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                onEditorError(it)
+                editorViewModel.error.postValue(null)
+            }
+        })
     }
 
     private fun setupHatsList() {
@@ -175,6 +185,16 @@ class EditorFragment : BaseFragment(), Injectable {
         } else {
             flProgressContainer?.visibility = View.GONE
             pbProgress?.hide()
+        }
+    }
+
+    private fun onEditorError(error: EditorError) {
+        when(error) {
+            EditorError.GAME_PREFS_FILE_NOT_EXISTS -> {
+                showMessage(
+                    getString(R.string.title_error_game_prefs_not_found),
+                    getString(R.string.text_error_game_prefs_not_found))
+            }
         }
     }
 

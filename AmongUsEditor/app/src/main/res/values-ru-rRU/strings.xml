@@ -18,6 +18,12 @@
     <string name="title_permissions_denied">Разрешения не предоставлены</string>
     <string name="message_permissions_denied">К сожалению, вы не предоставили все необходимые разрешения. В следующий раз просто нажмите "Разрешить" и тогда вы сможете настроить своего игрового персонажа!</string>
 
+    <string name="title_error_game_prefs_not_found">Упс!</string>
+    <string name="text_error_game_prefs_not_found">Похоже файл с настройками игры не найден! Без него редактор не будет работать…</string>
+
+    <string name="title_error_game_not_found">Упс!</string>
+    <string name="text_error_game_not_found">Похоже игра Among Us не установлена, не получится её запустить</string>
+
     <string name="editor_updating_game_prefs">Загрузка настроек игры…</string>
 
     <string name="editor_hats_list_title">Шляпы</string>
