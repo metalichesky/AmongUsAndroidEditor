@@ -33,7 +33,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_gravity="center"
                 android:foregroundGravity="center"
-                android:scaleType="centerInside" />
+                android:scaleType="fitCenter" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
