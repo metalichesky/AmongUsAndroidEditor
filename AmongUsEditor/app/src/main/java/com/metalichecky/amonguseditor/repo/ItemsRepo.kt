@@ -473,22 +473,12 @@ val hats = listOf(
     ),
     Hat(
         99,
-        "Ellry Mohawk",
-        "hat0099.png"
-    ),
-    Hat(
-        99,
         "Ellry mohawk",
         "hat0099.png"
     ),
     Hat(
         100,
         "Thomas Chestershire monocles",
-        "hat0100.png"
-    ),
-    Hat(
-        100,
-        "Thomas Chestershire Monocles",
         "hat0100.png"
     ),
     Hat(
