@@ -27,7 +27,7 @@ object ItemsRepo {
     private var petsRandom: MutableList<Pet> = mutableListOf()
     private var skinsRandom: MutableList<Skin> = mutableListOf()
 
-    fun <T: Any> getRandomNonRepeatable(clazz: KClass<T>): Item? {
+    fun <T : Any> getRandomNonRepeatable(clazz: KClass<T>): Item? {
         println("getRandomItem() ${clazz} ${Hat::class} ${clazz == Hat::class}")
         if (hatsRandom.isEmpty()) {
             hatsRandom = getHats().toMutableList()
@@ -38,7 +38,7 @@ object ItemsRepo {
         if (skinsRandom.isEmpty()) {
             skinsRandom = getSkins().toMutableList()
         }
-        return when(clazz) {
+        return when (clazz) {
             Hat::class -> {
                 val hat = hatsRandom.random(random)
                 hatsRandom.remove(hat)
@@ -58,9 +58,9 @@ object ItemsRepo {
         }
     }
 
-    fun <T: Any> getRandomItem(clazz: KClass<T>): Item? {
+    fun <T : Any> getRandomItem(clazz: KClass<T>): Item? {
         println("getRandomItem() ${clazz} ${Hat::class} ${clazz == Hat::class}")
-        return when(clazz) {
+        return when (clazz) {
             Hat::class -> {
                 getHats().random(random)
             }
@@ -445,8 +445,122 @@ val hats = listOf(
         93,
         "Snow Crewmate",
         "hat0093.png"
+    ),
+    Hat(
+        94,
+        "Geoff Keighley Mask",
+        "hat0094.png"
+    ),
+    Hat(
+        95,
+        "Dave Panpa Cap",
+        "hat0095.png"
+    ),
+    Hat(
+        96,
+        "Ellie Rose Hair",
+        "hat0096.png"
+    ),
+    Hat(
+        97,
+        "Sven Svensson Hat",
+        "hat0097.png"
+    ),
+    Hat(
+        98,
+        "Burt Curtis Hat",
+        "hat0098.png"
+    ),
+    Hat(
+        99,
+        "Ellry Mohawk",
+        "hat0099.png"
+    ),
+    Hat(
+        99,
+        "Ellry mohawk",
+        "hat0099.png"
+    ),
+    Hat(
+        100,
+        "Thomas Chestershire monocles",
+        "hat0100.png"
+    ),
+    Hat(
+        100,
+        "Thomas Chestershire Monocles",
+        "hat0100.png"
+    ),
+    Hat(
+        101,
+        "Wizard Hat",
+        "hat0101.png"
+    ),
+    Hat(
+        102,
+        "Fredrick Muenster Hat",
+        "hat0102.png"
+    ),
+    Hat(
+        103,
+        "Mr. Macbeth Hat",
+        "hat0103.png"
+    ),
+    Hat(
+        104,
+        "Toppat Henry Stickmin Hat",
+        "hat0104.png"
+    ),
+    Hat(
+        105,
+        "Toppat Ellie Rose Hat",
+        "hat0105.png"
+    ),
+    Hat(
+        106,
+        "Geoffrey Plumb Hat",
+        "hat0106.png"
+    ),
+    Hat(
+        107,
+        "Angry Eyebrows",
+        "hat0107.png"
+    ),
+    Hat(
+        108,
+        "Chocolate Ice Cream ;)",
+        "hat0108.png"
+    ),
+    Hat(
+        109,
+        "Heart Hat",
+        "hat0109.png"
+    ),
+    Hat(
+        110,
+        "Ponytail",
+        "hat0110.png"
+    ),
+    Hat(
+        111,
+        "Rubber Glove",
+        "hat0111.png"
+    ),
+    Hat(
+        112,
+        "Unicorn Hat",
+        "hat0112.png"
+    ),
+    Hat(
+        113,
+        "Zipper Hat",
+        "hat0113.png"
+    ),
+    Hat(
+        114,
+        "Right Hand Man Hat And Mustache",
+        "hat0114.png"
     )
-
 )
 
 val skins = listOf<Skin>(
@@ -465,7 +579,10 @@ val skins = listOf<Skin>(
     Skin(12, "MIRA Landing", "skin0012.png"),
     Skin(13, "Miner Gear", "skin0013.png"),
     Skin(14, "Winter Gear", "skin0014.png"),
-    Skin(15, "Archaeologist", "skin0015.png")
+    Skin(15, "Archaeologist", "skin0015.png"),
+    Skin(16, "Prisoner", "skin0016.png"),
+    Skin(17, "Center for Chaos Containment", "skin0017.png"),
+    Skin(18, "Right Hand Man Reborn", "skin0018.png")
 )
 
 val pets = listOf<Pet>(
@@ -479,5 +596,6 @@ val pets = listOf<Pet>(
     Pet(7, "UFO", "pet0007.png"),
     Pet(8, "Ellie", "pet0008.png"),
     Pet(9, "Squig", "pet0009.png"),
-    Pet(10, "Bedcrab", "pet0010.png")
+    Pet(10, "Bedcrab", "pet0010.png"),
+    Pet(11, "Glitch Pet", "pet0011.png")
 )

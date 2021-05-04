@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Among Us Editor</string>
+    <string name="wallpaper_description">Among Us Editor Живые Обои</string>
 
     <string name="main_menu_open_editor">Открыть редактор</string>
     <string name="main_menu_open_game">Открыть игру</string>

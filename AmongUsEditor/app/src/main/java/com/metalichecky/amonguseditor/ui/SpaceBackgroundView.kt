@@ -10,14 +10,13 @@ import com.metalichecky.amonguseditor.model.item.Hat
 import com.metalichecky.amonguseditor.model.item.Pet
 import com.metalichecky.amonguseditor.repo.AssetRepo
 import com.metalichecky.amonguseditor.repo.ItemsRepo
-import timber.log.Timber
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 class SpaceBackgroundView : SurfaceView, SurfaceHolder.Callback {
-    var drawThread: DrawThread? = null
+    var drawThread: SpaceDrawHandler? = null
     var world: World? = null
 
     constructor(context: Context) : super(context) {
@@ -50,12 +49,12 @@ class SpaceBackgroundView : SurfaceView, SurfaceHolder.Callback {
     }
 
     override fun surfaceCreated(sh: SurfaceHolder) {
-        drawThread = DrawThread(holder, createWord())
+        drawThread = SpaceDrawHandler(holder, createWord())
         drawThread?.start()
     }
 }
 
-class DrawThread(
+class SpaceDrawHandler(
     val surfaceHolder: SurfaceHolder,
     var world: World
 ) : Runnable {

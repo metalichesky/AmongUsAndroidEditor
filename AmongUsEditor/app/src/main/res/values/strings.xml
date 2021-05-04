@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Among Us Editor</string>
+    <string name="wallpaper_description">Among Us Editor Live Wallpaper</string>
+
 
     <string name="main_menu_open_editor">Open Editor</string>
     <string name="main_menu_open_game">Open Game</string>
