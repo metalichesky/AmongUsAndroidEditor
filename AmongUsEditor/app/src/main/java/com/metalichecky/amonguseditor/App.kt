@@ -15,12 +15,13 @@ import com.google.firebase.messaging.ktx.messaging
 import com.metalichecky.amonguseditor.di.AppInjector
 import com.metalichecky.amonguseditor.util.TypefaceUtils
 import com.tbruyelle.rxpermissions3.BuildConfig
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.HasAndroidInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-class App: Application(), HasActivityInjector {
+class App: Application(), HasAndroidInjector {
     companion object {
         lateinit var instance: App
 
@@ -29,8 +30,9 @@ class App: Application(), HasActivityInjector {
 
 
     @Inject
-    lateinit var dispatchingAndroidActivityInjector: DispatchingAndroidInjector<Activity>
-    override fun activityInjector() = dispatchingAndroidActivityInjector
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 
     override fun onCreate() {
         instance = this
