@@ -7,10 +7,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
 
 object PermissionsUtils {
     private const val DEFAULT_REQUEST_CODE = 21586

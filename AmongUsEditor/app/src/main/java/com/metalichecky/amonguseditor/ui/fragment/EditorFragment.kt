@@ -20,7 +20,6 @@ import com.metalichecky.amonguseditor.model.item.Hat
 import com.metalichecky.amonguseditor.model.item.Item
 import com.metalichecky.amonguseditor.model.item.Pet
 import com.metalichecky.amonguseditor.model.item.Skin
-import com.metalichecky.amonguseditor.repo.GamePrefsRepo
 import com.metalichecky.amonguseditor.repo.ItemsRepo
 import com.metalichecky.amonguseditor.util.FileUtils
 import com.metalichecky.amonguseditor.util.TypefaceUtils
