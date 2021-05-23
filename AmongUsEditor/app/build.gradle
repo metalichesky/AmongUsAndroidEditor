@@ -27,7 +27,11 @@ android {
             jvmTarget = "1.8"
         }
     }
-
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "AmongUsEditor${variant.versionName}.apk"
+        }
+    }
     signingConfigs {
         debug {
             storeFile file("../debug_keystore.jks")
@@ -42,7 +46,6 @@ android {
             keyPassword "AmOnGuSeDiToR2020"
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
