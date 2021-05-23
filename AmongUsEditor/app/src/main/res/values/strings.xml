@@ -11,6 +11,9 @@
     <string name="title_permissions_request">Allow some permissions</string>
     <string name="message_permissions_request">To work with the character editor, you need to allow the application to access the file system of the device. Just click "Allow" and you will be able to work with the editor!</string>
 
+    <string name="title_manage_all_files_request">Allow manage all files</string>
+    <string name="message_manage_all_files_request">To work with the character editor, you need to allow the application to access all files. Without this permission, the application will not be able to access the game files since Android 11!</string>
+
 
     <string name="title_permissions_dont_ask_again">Permissions not allowed</string>
     <string name="message_permissions_dont_ask_again">It looks like you are not allowed to ask you for permission. Now, you should enable permissions through the app settings.</string>

@@ -1,6 +1,8 @@
 package com.metalichecky.amonguseditor.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +10,6 @@ import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.ktx.Firebase
 import com.metalichecky.amonguseditor.BuildConfig
 import com.metalichecky.amonguseditor.R
 import com.metalichecky.amonguseditor.adapter.LanguageAdapter
@@ -103,13 +104,13 @@ class MainFragment : BaseFragment(), Injectable {
 
     private fun openGame() {
         FirebaseLogger.logNavigate(Screen("AmongUsGame"), NavigateType.OPEN)
-        if (!DeeplinkUtils.amongUsGameExists()) {
+        if (!IntentUtils.amongUsGameExists()) {
             showMessage(
                 getString(R.string.title_error_game_not_found),
                 getString(R.string.text_error_game_not_found)
             )
         }
-        DeeplinkUtils.openAmongUsGame()
+        IntentUtils.openAmongUsGame()
     }
 
     private fun openEditor() {
@@ -120,6 +121,16 @@ class MainFragment : BaseFragment(), Injectable {
                 object : MessageDialog.Listener {
                     override fun onClosed() {
                         requestNeededPermissions()
+                    }
+                }
+            )
+        } else if (isNeedManageExternalStorage()) {
+            showMessage(
+                getString(R.string.title_permissions_request),
+                getString(R.string.message_permissions_request),
+                object : MessageDialog.Listener {
+                    override fun onClosed() {
+                        requestManageExternalStorage()
                     }
                 }
             )
@@ -161,13 +172,27 @@ class MainFragment : BaseFragment(), Injectable {
         }
     }
 
+    private fun isNeedManageExternalStorage(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            !Environment.isExternalStorageManager()
+        } else {
+            false
+        }
+    }
+
+    private fun requestManageExternalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            IntentUtils.openManageAllFilesSettings()
+        }
+    }
+
     private fun openPermissionSettings() {
         showMessage(
             getString(R.string.title_permissions_dont_ask_again),
             getString(R.string.message_permissions_dont_ask_again),
             object : MessageDialog.Listener {
                 override fun onClosed() {
-                    DeeplinkUtils.openAppPermissionSettings()
+                    IntentUtils.openAppPermissionSettings()
                 }
             }
         )

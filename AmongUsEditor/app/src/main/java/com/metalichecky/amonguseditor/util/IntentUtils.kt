@@ -3,12 +3,14 @@ package com.metalichecky.amonguseditor.util
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
 import com.metalichecky.amonguseditor.App
 
 
-object DeeplinkUtils {
+object IntentUtils {
 
 
     fun openAmongUsGame() {
@@ -36,5 +38,11 @@ object DeeplinkUtils {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun openManageAllFilesSettings() {
+        App.instance.startActivity(Intent().apply {
+            action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+        })
+    }
 
 }
