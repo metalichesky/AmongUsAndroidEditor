@@ -181,18 +181,20 @@ class MainFragment : BaseFragment(), Injectable {
     }
 
     private fun requestManageExternalStorage() {
+        val activity = activity ?: return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            IntentUtils.openManageAllFilesSettings()
+            IntentUtils.openManageAllFilesSettings(activity)
         }
     }
 
     private fun openPermissionSettings() {
+        val activity = activity ?: return
         showMessage(
             getString(R.string.title_permissions_dont_ask_again),
             getString(R.string.message_permissions_dont_ask_again),
             object : MessageDialog.Listener {
                 override fun onClosed() {
-                    IntentUtils.openAppPermissionSettings()
+                    IntentUtils.openAppPermissionSettings(activity)
                 }
             }
         )

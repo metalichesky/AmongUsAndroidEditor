@@ -1,5 +1,6 @@
 package com.metalichecky.amonguseditor.util
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -30,8 +31,8 @@ object IntentUtils {
     }
 
 
-    fun openAppPermissionSettings() {
-        App.instance.startActivity(Intent().apply {
+    fun openAppPermissionSettings(context: Context) {
+        context.startActivity(Intent().apply {
             action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
             data = Uri.fromParts("package", App.instance.packageName, null)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -39,9 +40,10 @@ object IntentUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun openManageAllFilesSettings() {
-        App.instance.startActivity(Intent().apply {
+    fun openManageAllFilesSettings(context: Context) {
+        context.startActivity(Intent().apply {
             action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
     }
 
