@@ -26,6 +26,7 @@ object GamePrefsRepo {
             reader.close()
             GamePrefs.fromString(prefsString)
         } catch (ex: Exception) {
+            ex.printStackTrace()
             Firebase.crashlytics.recordException(CatchedGamePrefsException.create(ex))
             null
         }
@@ -40,6 +41,7 @@ object GamePrefsRepo {
             fileWriter.flush()
             fileWriter.close()
         } catch (ex: Exception) {
+            ex.printStackTrace()
             Firebase.crashlytics.recordException(CatchedGamePrefsException.create(ex))
         }
     }

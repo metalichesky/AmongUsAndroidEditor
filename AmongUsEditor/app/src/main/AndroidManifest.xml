@@ -29,7 +29,8 @@
 
         <activity
             android:name=".ui.activity.SplashActivity"
-            android:theme="@style/AppTheme.Launcher">
+            android:theme="@style/AppTheme.Launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,7 +39,8 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:exported="false"/>
 
 
         <service
@@ -64,7 +66,8 @@
             android:name=".SpaceWallpaperService"
             android:enabled="true"
             android:label="Wallpaper Example"
-            android:permission="android.permission.BIND_WALLPAPER">
+            android:permission="android.permission.BIND_WALLPAPER"
+            android:exported="true">
 
             <meta-data
                 android:name="android.service.wallpaper"

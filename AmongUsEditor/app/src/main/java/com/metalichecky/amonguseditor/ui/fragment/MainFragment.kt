@@ -173,11 +173,13 @@ class MainFragment : BaseFragment(), Injectable {
     }
 
     private fun isNeedManageExternalStorage(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             !Environment.isExternalStorageManager()
         } else {
             false
         }
+        Timber.d("isNeedManageExternalStorage() ${result}")
+        return result
     }
 
     private fun requestManageExternalStorage() {
